@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Main</title>
+</head>
+
+<body>
+    {% block bootstaplink %}
+    {% include  '.\design\boostraplink.html' %}
+    {% endblock %}
+    {% block navbar %}
+    {% include  '.\design\navbar.html' %}
+    {% endblock %}
+
+    <!--asfıaosfjalsfa-->
+    <div class="container">
+        <div class="avatar" style="margin-top: 50px; ">
+        </div>
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-8 col-lg-offset-3" style="margin-left: 150px">
+                <h1 style="text-align: center">Oğuz Banka Hoş Geldiniz.</h1>
+                <hr>
+                <h4>İletişim Bilgileri</h4>
+                <hr>
+                <p>E-posta: oguzhan.ctb@gmail.com</p>
+                <p>Github: oguzhandeveloper</p>
+
+            </div>
+        </div>
+    </div>
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == "success" %}
+    <script>
+        alert('{{ message }}');
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+</body>
+
+</html>

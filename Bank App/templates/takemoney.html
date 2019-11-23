@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Take Money</title>
+</head>
+
+<body>
+    <div style="margin: auto;">
+        {% block bootstaplink %}
+        {% include  '.\design\boostraplink.html' %}
+        {% endblock %}
+        {% block navbar %}
+        {% include  '.\design\navbar.html' %}
+        {% endblock %}
+    </div>
+    <div class="container">
+        <div class="avatar" style="margin-top: 50px">
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-8 col-lg-offset-3">
+                <!--Add Account Card-->
+                <div class="col-md-8 mb-4" style="margin: auto;">
+                    <div style=" border: 1px solid grey">
+                        <div class="card" style="margin-left:1px;">
+                            <div class="card-header">
+                                <h4>Take Money</h4>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <form role="Form" method="POST" action="takemoneyfrombalance" accept-charset="UTF-8">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <input type="text" name="amount" placeholder="Put the amount..."
+                                        class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input style="display: none" type="text" name="hesapno" value={{hesapno}}>
+                                </div>
+                                <button type="submit" class="btn btn-danger btn-block">Take Money</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "success" %}
+        <script>
+            alert('{{ message }}');
+        </script>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+</body>
+
+</html>

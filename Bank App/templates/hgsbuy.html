@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Buy Hgs</title>
+</head>
+
+<body>
+    {% block bootstaplink %}
+    {% include  '.\design\boostraplink.html' %}
+    {% endblock %}
+    {% block navbar %}
+    {% include  '.\design\navbar.html' %}
+    {% endblock %}
+
+    <div class="container">
+        <div class="avatar" style="margin-top: 50px">
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-10 col-lg-offset-3">
+
+                {% for data in datas %}
+
+
+                <script>
+                    console.log("{{data.fields}}")
+                </script>
+                <div class="col-md-8 mb-4" style="margin: auto">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between"
+                            onClick="changevisibility('{{data.pk}}')">
+                            <h4 class="d-inline">{{data.pk}}</h4>
+                        </div>
+                        <div class="all-card-body" id="{{data.pk}}" style="display: none">
+                            <div class="card-body">
+                                <div class=" form-group">
+                                    <form role="Form" method="POST" action="buyhgsproducts" accept-charset="UTF-8">
+                                        {% csrf_token %}
+                                        <label htmlFor="account1select">Select A Sender Account</label>
+                                        <div class="dropdown show">
+                                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                id="dropdownSenderOtherLink{{data.pk}}" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                Select A Account
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                {% for acc in accounts %}
+                                                <a class="dropdown-item" id="{{acc.hesapno}}{{data.pk}}"
+                                                    onclick="selectSenderOtherAccount('{{acc.hesapno}}','{{data.pk}}')">{{acc.hesapno}}
+                                                    -
+                                                    {{acc.hesapbakiye}}</a>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input id="selected_Sender_Other_account{{data.pk}}" class="form-control"
+                                                style="display: none" type="text" name="account"
+                                                value="{{acc.hesapno}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="pk" style="display: none" value="{{data.pk}}"
+                                                class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label htmlFor="hgsLabel">Sınıf</label>
+                                            <input type="text" disabled name="sinif" placeholder="Sınıf..."
+                                                value="{{data.fields.sinif}}" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label htmlFor="hgsLabel">Arac Tipi</label>
+                                            <input type="text" disabled name="aractipi" placeholder="Araç Tipi..."
+                                                value="{{data.fields.aractipi}}" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label htmlFor="hgsLabel">Fiyat</label>
+                                            <input type="text" disabled name="fiyati" placeholder="Fiyat..."
+                                                value="{{data.fields.price}}" class="form-control">
+                                            <input type="text" style="display: none" name="fiyat" placeholder="Fiyat..."
+                                                value="{{data.fields.price}}" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label htmlFor="hgsLabel">Açıklama</label>
+                                            <input type="text" disabled name="aciklama" placeholder="Açıklama..."
+                                                value="{{data.fields.aciklama}}" class="form-control">
+                                        </div>
+                                        <button type="submit" class="btn btn-danger btn-block">Buy HGS</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == "success" %}
+    <script>
+        alert('{{ message }}');
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+
+    <script>
+
+        //Other
+        function selectSenderOtherAccount(account_, pk) {
+            console.log(pk)
+            document.getElementById('selected_Sender_Other_account'+pk).value = account_;
+            document.getElementById('dropdownSenderOtherLink'+pk).innerHTML = document.getElementById(account_ + pk).innerHTML
+        }
+
+
+        function changevisibility(element) {
+            if (document.getElementById(element).style.display != "none") {
+                document.getElementById(element).style.display = "none";
+            } else {
+                document.getElementById(element).style.display = "block";
+            }
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Transfer</title>
+</head>
+
+<body>
+    {% block bootstaplink %}
+    {% include  '.\design\boostraplink.html' %}
+    {% endblock %}
+    {% block navbar %}
+    {% include  '.\design\navbar.html' %}
+    {% endblock %}
+
+    <!--asfıaosfjalsfa-->
+    <div class="container">
+        <div class="avatar" style="margin-top: 50px">
+        </div>
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-8 col-lg-offset-3">
+
+                <div class="col-md-8 mb-4" style="margin: auto;">
+                    <div style=" border: 1px solid grey">
+                        <div class="card" >
+                            <div class="card-header">
+                                <ul class="nav ">
+                                    <li class="active"><a data-toggle="tab" href="#virman">Virman</a></li>
+                                    <li><a data-toggle="tab" href="#other">Other Client</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="tab-content">
+                    <div id="virman" class="tab-pane fade in active">
+                        <!--Transfer (Between Accounts)-->
+                        <div style="margin-top:50px; width: 100%;margin: auto;top: auto;left: 50%;">
+
+                            <div class="col-md-8 mb-4" style="margin: auto;">
+                                <div style=" border: 1px solid grey">
+                                    <div class="card" style="margin-left:1px;">
+                                        <div class="card-header">
+                                            <h4>Transfer (Between Accounts)</h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <form role="Form" method="POST" action="sendmoney" accept-charset="UTF-8">
+                                            {% csrf_token %}
+                                            <!--SENDER ACCOUNT START-->
+                                            <label htmlFor="account1select">Select A Sender Account</label>
+                                            <div class="dropdown show">
+                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                    id="dropdownSenderLink" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                    Select A Account
+                                                </a>
+
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    {% for acc in accounts %}
+                                                    <a class="dropdown-item" id="{{acc.hesapno}}sender"
+                                                        onclick="selectSenderAccount('{{acc.hesapno}}')">{{acc.hesapno}}
+                                                        -
+                                                        {{acc.hesapbakiye}}</a>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <input id="selected_Sender_account" class="form-control"
+                                                    style="display: none" type="text" name="senderaccount"
+                                                    value="{{acc.hesapno}}">
+                                            </div>
+                                            <!--SENDER ACCOUNT END-->
+
+                                            <hr>
+
+                                            <!--RECEIVER ACCOUNT START-->
+                                            <label htmlFor="account2select">Select A Receiver Account</label>
+                                            <div class="dropdown show">
+                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                    id="dropdownReceiverLink" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    Select A Account
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    {% for acc in accounts %}
+                                                    <a class="dropdown-item" id="{{acc.hesapno}}receiver"
+                                                        onclick="selectReceiverAccount('{{acc.hesapno}}')">{{acc.hesapno}}
+                                                        -
+                                                        {{acc.hesapbakiye}}</a>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <input id="selected_Receiver_account" style="display: none" type="text"
+                                                    name="receiveraccount" value="{{acc.hesapno}}" class="form-control">
+                                            </div>
+                                            <!--RECEIVER ACCOUNT END-->
+
+                                            <hr>
+
+                                            <label htmlFor="moneyAmountlabel">Enter Money Amount</label>
+                                            <div class="form-group">
+                                                <input placeholder="Money Amount" type="text" name="moneyamount"
+                                                    class="form-control">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input id="havale_tip_no" style="display: none" type="text"
+                                                    name="havaletipno" value="1" class="form-control">
+                                            </div>
+
+
+                                            <button type="submit" class="btn btn-danger btn-block">Send
+                                                Money</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Transfer (Between Accounts) END-->
+
+                    </div>
+                    <div id="other" class="tab-pane fade">
+                        <!--Transfer (Between Clients)-->
+                        <div style="margin-top:50px; width: 100%;margin: auto;top: auto;left: 50%;">
+
+                            <div class="col-md-8 mb-4" style="margin: auto;">
+                                <div style=" border: 1px solid grey">
+                                    <div class="card" style="margin-left:1px;">
+                                        <div class="card-header">
+                                            <h4>Transfer (Between Client Account)</h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <form role="Form" method="POST" action="sendmoney" accept-charset="UTF-8">
+                                            {% csrf_token %}
+                                            <!--SENDER ACCOUNT START-->
+                                            <label htmlFor="account1select">Select A Sender Account</label>
+                                            <div class="dropdown show">
+                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                    id="dropdownSenderOtherLink" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                    Select A Account
+                                                </a>
+
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    {% for acc in accounts %}
+                                                    <a class="dropdown-item" id="{{acc.hesapno}}sender"
+                                                        onclick="selectSenderOtherAccount('{{acc.hesapno}}')">{{acc.hesapno}}
+                                                        -
+                                                        {{acc.hesapbakiye}}</a>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <input id="selected_Sender_Other_account" class="form-control"
+                                                    style="display: none" type="text" name="senderaccount"
+                                                    value="{{acc.hesapno}}">
+                                            </div>
+                                            <!--SENDER ACCOUNT END-->
+
+                                            <hr>
+
+                                            <!--RECEIVER ACCOUNT START-->
+                                            <label htmlFor="account2select">Enter A Receiver Account</label>
+
+                                            <div class="form-group">
+                                                <input id="selected_Receiver_account" type="text" maxlength="15"
+                                                    placeholder="Enter Account Number" name="receiveraccount"
+                                                    value="{{acc.hesapno}}" class="form-control">
+                                            </div>
+                                            <!--RECEIVER ACCOUNT END-->
+
+                                            <hr>
+
+                                            <label htmlFor="moneyAmountlabel">Enter Money Amount</label>
+                                            <div class="form-group">
+                                                <input placeholder="Money Amount" type="text" name="moneyamount"
+                                                    class="form-control">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <input id="havale_tip_no" style="display: none" type="text"
+                                                    name="havaletipno" value="1" class="form-control">
+                                            </div>
+
+
+                                            <button type="submit" class="btn btn-danger btn-block">Send
+                                                Money</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Transfer (Between Clients) END-->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- afapsfnaosghlakjgaps-->
+
+
+
+
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == "success" %}
+    <script>
+        alert('{{ message }}');
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+
+    <script>
+        // Virman
+        function selectSenderAccount(account_) {
+            document.getElementById('selected_Sender_account').value = account_;
+            console.log(document.getElementById('selected_Sender_account').value)
+            document.getElementById('dropdownSenderLink').innerHTML = document.getElementById(account_ + "sender").innerHTML
+        }
+
+        function selectReceiverAccount(account_) {
+
+            document.getElementById('selected_Receiver_account').value = account_;
+            document.getElementById('dropdownReceiverLink').innerHTML = document.getElementById(account_ + "receiver").innerHTML
+        }
+
+        //Other
+        function selectSenderOtherAccount(account_) {
+            document.getElementById('selected_Sender_Other_account').value = account_;
+            document.getElementById('dropdownSenderOtherLink').innerHTML = document.getElementById(account_ + "sender").innerHTML
+        }
+
+    </script>
+</body>
+
+</html>

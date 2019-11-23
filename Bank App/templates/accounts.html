@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    {% block getHome %}
+    {% include  '.\design\getHome.html' %}
+    {% endblock %}
+    <title>Accounts</title>
+</head>
+
+<body>
+    <div style="margin: auto;">
+        {% block bootstaplink %}
+        {% include  '.\design\boostraplink.html' %}
+        {% endblock %}
+        {% block navbar %}
+        {% include  '.\design\navbar.html' %}
+        {% endblock %}
+    </div>
+
+    <div class="container">
+        <div class="avatar" style="margin-top: 50px">
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-8 col-lg-offset-3"
+                >
+                <!--Add Account Card-->
+                <div class="col-md-8 mb-4" style="margin: auto;">
+                    <div style=" border: 1px solid grey">
+                        <div class="card" style="margin-left:1px;">
+                            <div class="card-header">
+                                <h4>Add Account</h4>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <form role="Form" method="POST" action="addaccount" accept-charset="UTF-8">
+                                {% csrf_token %}
+
+                                <label htmlFor="addaccountinfo">If you want add a account click the button.</label>
+                                <button type="submit" class="btn btn-danger btn-block">Add Account</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--All Accounts-->
+                {% for acc in accounts %}
+
+
+                <div class="col-md-8 mb-4" style="margin: auto">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between"
+                            onClick="changevisibility('{{acc.hesapno}}')">
+                            <h4 class="d-inline">{{acc.hesapno}}</h4>
+                        </div>
+                        <div class="all-card-body" id="{{acc.hesapno}}" style="display: none">
+                            <div class="card-body">
+                                <p class="card-text">Account Balance: {{acc.hesapbakiye}}</p>
+                                <p class="card-text">Account Date: {{acc.hesaptarihi}}</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <form role="Form" method="POST" action="addmoney" accept-charset="UTF-8">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <input style="display: none" type="text" name="hesapno"
+                                                value={{acc.hesapno}} class="form-control">
+                                        </div>
+
+                                        <button type="submit" class="btn btn-danger btn-block">Add Money</button>
+                                        <button type="submit" formaction="takemoney"
+                                            class="btn btn-danger btn-block">Take
+                                            Money</button>
+                                        <button type="submit" formaction="gettransactions"
+                                            class="btn btn-danger btn-block">Account
+                                            Transactions</button>
+                                        <button type="submit" formaction="deleteaccount"
+                                            class="btn btn-danger btn-block">Delete
+                                            Account</button>
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == "success" %}
+    <script>
+        alert('{{ message }}');
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    
+    <script>
+        function changevisibility(element) {
+            if (document.getElementById(element).style.display != "none") {
+                document.getElementById(element).style.display = "none";
+            } else {
+                document.getElementById(element).style.display = "block";
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

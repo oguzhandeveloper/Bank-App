@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile</title>
+</head>
+
+<body>
+    {% block bootstaplink %}
+    {% include  '.\design\boostraplink.html' %}
+    {% endblock %}
+    {% block navbar %}
+    {% include  '.\design\navbar.html' %}
+    {% endblock %}
+
+    <div class="container">
+        <div class="avatar" style="margin-top: 50px">
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-10 col-lg-offset-3">
+                <!--Add Account Card-->
+                <div class="col-md-8 mb-4" style="margin: auto;">
+                    <div style=" border: 1px solid grey">
+                        <div class="card" style="margin-left:1px;">
+                            <div class="card-header">
+                                <h4>Profile</h4>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <form role="Form" method="POST" action="updateprofile" accept-charset="UTF-8">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <label htmlFor="aboutProfile">T.C. ID</label>
+                                    <input type="text" name="tc" disabled placeholder="Tc Kimlik No..."
+                                        value="{{profile.tcID}}" class="form-control">
+                                    <input type="text" name="tcNo" style="display: none" value="{{profile.tcID}}"
+                                        class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label htmlFor="aboutProfile">Name</label>
+                                    <input type="text" name="name" placeholder="Name..." value="{{profile.name}}"
+                                        class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label htmlFor="aboutProfile">Last Name</label>
+                                    <input type="text" name="lastname" placeholder="Last Name..."
+                                        value="{{profile.lastname}}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    
+                                    <label htmlFor="aboutProfile">Birth Date (Year-Month-Day)</label>
+                                    <input type="text" name="birthdate" placeholder="Birth Date..."
+                                        value="{{profile.birthdate}}" class="form-control">
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <label htmlFor="aboutProfile">Customer ID</label>
+                                    <input type="text" name="customerID" disabled placeholder="CustomerID..."
+                                        value="{{profile.customerID}}" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label htmlFor="aboutProfile">Balance</label>
+                                    <input type="text" name="balance" disabled placeholder="Balance..."
+                                        value="{{profile.balance}}" class="form-control">
+                                </div>
+
+
+
+
+                                <hr>
+                                <button type="submit" class="btn btn-danger btn-block">Update Profile</button>
+                                <button type="submit" class="btn btn-danger btn-block"
+                                    formaction="passwordupdate">Update Password</button>
+                                <button type="submit" class="btn btn-danger btn-block" formaction="deleteprofile">Delete
+                                    Profile</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == "success" %}
+    <script>
+        alert('{{ message }}');
+    </script>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+</body>
+
+</html>

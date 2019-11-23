@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    {% block getHome %}
+    {% include  '.\design\getHome.html' %}
+    {% endblock %}
+    <title>Account Transactions</title>
+</head>
+
+<body>
+    <div style="margin: auto;">
+        {% block bootstaplink %}
+        {% include  '.\design\boostraplink.html' %}
+        {% endblock %}
+        {% block navbar %}
+        {% include  '.\design\navbar.html' %}
+        {% endblock %}
+    </div>
+
+    <div class="container">
+        <div class="avatar" style="margin-top: 50px">
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-8 col-lg-offset-3">
+                {% for trans in accounttransactions %}
+
+                <div class="col-md-8 mb-4" style="margin: auto">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between"
+                            onClick="changevisibility('{{trans.havaleno}}')">
+                            {% if trans.gondericihesapno == hesapno %}
+                            <h4 class="d-inline">{{trans.havaleno}} - Sender</h4>
+                            {% else %}
+                            <h4 class="d-inline">{{trans.havaleno}} - Receiver</h4>
+                            {% endif %}
+                        </div>
+                        <div class="all-card-body" id="{{trans.havaleno}}" style="display: none">
+                            <div class="card-body">
+                                <p class="card-text">Sender Account: {{trans.gondericihesapno}}</p>
+                                <p class="card-text">Receiver Account: {{trans.alicihesapno}}</p>
+                                <p class="card-text">Money Amount: {{trans.havalemiktari}}</p>
+                                <p class="card-text">Transaction Type: {{trans.havaletipno}}</p>
+                                <p class="card-text">Transaction Date: {{trans.havaletarihi}}</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == "success" %}
+        <script>
+            alert('{{ message }}');
+        </script>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        <style>
+            #mydiv {
+                visibility: hidden;
+            }
+        </style>
+
+        <script>
+            function changevisibility(element) {
+                if (document.getElementById(element).style.display != "none") {
+                    document.getElementById(element).style.display = "none";
+                } else {
+                    document.getElementById(element).style.display = "block";
+                }
+            }
+
+        </script>
+
+</body>
+
+</html>
